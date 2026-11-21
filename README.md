@@ -20,22 +20,20 @@ It uses Apple's developer services through [pymobiledevice3](https://github.com/
 ## Install
 
 1. Clone or download the repo.
-2. Run `Instalar o reparar.bat` (asks for admin). It installs the engine to `%LOCALAPPDATA%\UbicacionIphone`, applies a Windows fix, and creates the scheduled task.
-3. Run `Emparejar iPhone.bat` and follow it: on the iPhone, Settings → Developer → Paired Macs, tap this PC under "Other devices" and enter the 6-digit code.
-4. Pick a place with `Cambiar ubicacion.bat`.
-
-> The `.bat` files are in Spanish: `Instalar o reparar` = install/repair, `Emparejar iPhone` = pair iPhone, `Cambiar ubicacion` = change location, `Estado` = status, `Activar`/`Desactivar` = on/off.
+2. Run `Install or repair.bat` (asks for admin). It installs the engine to `%LOCALAPPDATA%\UbicacionIphone`, applies a Windows fix, and creates the scheduled task.
+3. Run `Pair iPhone.bat` and follow it: on the iPhone, Settings → Developer → Paired Macs, tap this PC under "Other devices" and enter the 6-digit code.
+4. Pick a place with `Change location.bat`.
 
 ## Usage
 
 | File | What it does |
 |---|---|
-| `Estado.bat` | Whether it's active, the iPhone's last confirmation, recent events |
-| `Activar.bat` | Applies the location from `config.json` |
-| `Desactivar.bat` | Back to the real location (stays off after a reboot) |
-| `Cambiar ubicacion.bat` | Pick a place from `lugares.json` or paste Google Maps coordinates |
-| `Emparejar iPhone.bat` | Pair the iPhone over Wi-Fi (once) |
-| `Instalar o reparar.bat` | Install or repair everything; safe to re-run |
+| `Status.bat` | Whether it's active, the iPhone's last confirmation, recent events |
+| `Enable.bat` | Applies the location from `config.json` |
+| `Disable.bat` | Back to the real location (stays off after a reboot) |
+| `Change location.bat` | Pick a place from `lugares.json` or paste Google Maps coordinates |
+| `Pair iPhone.bat` | Pair the iPhone over Wi-Fi (once) |
+| `Install or repair.bat` | Install or repair everything; safe to re-run |
 
 Your favorite places go in `lugares.json` (copy it from `lugares.ejemplo.json`). `config.json` is created from `config.ejemplo.json`. Both are personal and `.gitignore`d.
 

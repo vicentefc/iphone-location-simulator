@@ -14,7 +14,7 @@ Write-Host '  ----------------'
 Write-Host "  Lugar configurado : $($cfg.nombre)"
 Write-Host "  Coordenadas       : $($cfg.latitud), $($cfg.longitud)"
 Write-Host "  Activado          : $(if ($cfg.activo) { 'Si' } else { 'No' })"
-Write-Host "  Revision automatica (tarea): $(if ($tarea) { $tarea.State } else { 'NO INSTALADA - ejecuta Instalar o reparar.bat' })"
+Write-Host "  Revision automatica (tarea): $(if ($tarea) { $tarea.State } else { 'NO INSTALADA - ejecuta Install or repair.bat' })"
 
 $edad = if ($estado -and $estado.latido) { [int]((Get-Date) - [datetime]$estado.latido).TotalSeconds } else { $null }
 Write-Host ''
@@ -22,7 +22,7 @@ if (-not $cfg.activo) {
     Write-Host '  ESTADO: DESACTIVADO (el iPhone usa su ubicacion real)' -ForegroundColor Yellow
 } elseif ($procs.Count -eq 0) {
     Write-Host '  ESTADO: DETENIDO - la revision automatica lo reinicia en menos de 5 min,' -ForegroundColor Red
-    Write-Host '          o usa Activar.bat para hacerlo ya.' -ForegroundColor Red
+    Write-Host '          o usa Enable.bat para hacerlo ya.' -ForegroundColor Red
 } elseif ($estado.fase -eq 'activo' -and $edad -lt 60) {
     $d = Get-DaemonEstado
     $conf = try { [int]((Get-Date) - [datetime]$d.confirmado).TotalSeconds } catch { $null }

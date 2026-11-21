@@ -25,7 +25,7 @@ function Get-Config {
     Get-Content -LiteralPath $ConfigFile -Raw -Encoding UTF8 | ConvertFrom-Json
 }
 
-# Lugares favoritos para Cambiar ubicacion.bat (lugares.json es personal y no va al repo)
+# Lugares favoritos para Change location.bat (lugares.json es personal y no va al repo)
 function Get-Lugares {
     $archivo = Join-Path $Raiz 'lugares.json'
     if (-not (Test-Path -LiteralPath $archivo)) { $archivo = Join-Path $Raiz 'lugares.ejemplo.json' }

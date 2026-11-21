@@ -49,7 +49,7 @@ try {
     $cfg = Get-Config
     $registro = Join-Path $env:USERPROFILE ".pymobiledevice3\remote_$($cfg.udid).plist"
     if (Test-Path $registro) { Write-Host 'OK' }
-    else { Write-Host 'Falta emparejar: ejecuta "Emparejar iPhone.bat"' -ForegroundColor Yellow }
+    else { Write-Host 'Falta emparejar: ejecuta "Pair iPhone.bat"' -ForegroundColor Yellow }
 
     # 4. Tarea programada
     Paso 'Tarea programada'

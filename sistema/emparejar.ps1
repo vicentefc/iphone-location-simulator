@@ -21,7 +21,7 @@ if ($LASTEXITCODE -eq 0) {
         $cfg.udid = $rec.BaseName -replace '^remote_', ''
         Set-Config $cfg
     }
-    Write-Host '  Emparejado. Ahora usa Activar.bat' -ForegroundColor Green
+    Write-Host '  Emparejado. Ahora usa Enable.bat' -ForegroundColor Green
 } else {
     Write-Host '  No se completo el emparejamiento. Vuelve a intentarlo.' -ForegroundColor Red
 }

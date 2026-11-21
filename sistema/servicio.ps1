@@ -3,7 +3,7 @@
 # desarrollador y reenvio de la ubicacion). Este script solo:
 #   - lo mantiene vivo y lo relanza si termina o se cuelga,
 #   - aplica cambios de config.json (otro lugar, o desactivar),
-#   - publica el estado en estado.json para Estado.bat y para el guardian (revisar.ps1).
+#   - publica el estado en estado.json para Status.bat y para el guardian (revisar.ps1).
 . (Join-Path $PSScriptRoot 'comun.ps1')
 
 # Un solo supervisor y un solo daemon a la vez
@@ -47,7 +47,7 @@ while ($true) {
             $daemon = Start-Daemon
         }
 
-        # Estado para Estado.bat y el guardian
+        # Estado para Status.bat y el guardian
         $d = Get-DaemonEstado
         if ($d) {
             Set-Estado $d.fase $(if ($d.fase -eq 'activo') { "$($cfg.nombre) ($($cfg.latitud), $($cfg.longitud))" } else { $d.detalle })
