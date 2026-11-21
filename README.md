@@ -2,83 +2,75 @@
   <img src="docs/banner.svg" alt="iPhone Location Simulator" width="100%">
 </p>
 
-Simula la ubicación GPS de un iPhone (iOS 26/27) por Wi-Fi, desde Windows. Sin jailbreak, sin cable y sin Mac.
+Simulate an iPhone's GPS location (iOS 26/27) over Wi-Fi, from Windows. No jailbreak, no cable, no Mac.
 
-Lo hice porque las herramientas que encontré necesitaban Mac o cable, y porque en iOS 26/27 mandar la ubicación una sola vez no sirve: el iPhone vuelve solo a la ubicación real a los pocos segundos. Esto queda corriendo de fondo, la reaplica sola y se reconecta cuando el iPhone corta el Wi-Fi.
+I made this because the tools I found needed a Mac or a cable, and because on iOS 26/27 setting the location once doesn't work: the phone goes back to the real GPS after a few seconds. This runs in the background, re-applies the location on its own, and reconnects when the iPhone drops the Wi-Fi.
 
-Usa los servicios de desarrollador de Apple a través de [pymobiledevice3](https://github.com/doronz88/pymobiledevice3).
+It uses Apple's developer services through [pymobiledevice3](https://github.com/doronz88/pymobiledevice3).
 
-> Funciona solo con un iPhone propio, emparejado (escribes un código de 6 dígitos en el teléfono) y con el Modo de desarrollador activado. No sirve para acceder a un iPhone ajeno.
+> Works only with your own iPhone, paired (you type a 6-digit code on the phone) and with Developer Mode on. It can't reach an iPhone you haven't paired.
 
-## Requisitos
+## Requirements
 
-- Windows 10/11 con [Python 3.13](https://www.python.org/downloads/) — `winget install Python.Python.3.13`
-- iTunes (de apple.com) y [Bonjour](https://developer.apple.com/bonjour/) — `winget install Apple.Bonjour`
-- iPhone con iOS 26 o superior y Modo de desarrollador activado (Ajustes → Privacidad y seguridad → Modo de desarrollador)
-- La PC y el iPhone en la misma Wi-Fi, con la red marcada como Privada en Windows
+- Windows 10/11 with [Python 3.13](https://www.python.org/downloads/) — `winget install Python.Python.3.13`
+- iTunes (from apple.com) and [Bonjour](https://developer.apple.com/bonjour/) — `winget install Apple.Bonjour`
+- iPhone on iOS 26 or later with Developer Mode on (Settings → Privacy & Security → Developer Mode)
+- The PC and the iPhone on the same Wi-Fi, with the network set to Private in Windows
 
-## Instalación
+## Install
 
-1. Clona o descarga el repo.
-2. Ejecuta `Instalar o reparar.bat` (pide administrador). Instala el motor en `%LOCALAPPDATA%\UbicacionIphone`, aplica un arreglo para Windows y crea la tarea programada.
-3. Ejecuta `Emparejar iPhone.bat` y sigue los pasos: en el iPhone, Ajustes → Desarrollador → Mac emparejados, toca esta PC en "Otros dispositivos" y escribe el código de 6 dígitos.
-4. Elige un lugar con `Cambiar ubicacion.bat`.
+1. Clone or download the repo.
+2. Run `Instalar o reparar.bat` (asks for admin). It installs the engine to `%LOCALAPPDATA%\UbicacionIphone`, applies a Windows fix, and creates the scheduled task.
+3. Run `Emparejar iPhone.bat` and follow it: on the iPhone, Settings → Developer → Paired Macs, tap this PC under "Other devices" and enter the 6-digit code.
+4. Pick a place with `Cambiar ubicacion.bat`.
 
-## Uso
+> The `.bat` files are in Spanish: `Instalar o reparar` = install/repair, `Emparejar iPhone` = pair iPhone, `Cambiar ubicacion` = change location, `Estado` = status, `Activar`/`Desactivar` = on/off.
 
-| Archivo | Para qué |
+## Usage
+
+| File | What it does |
 |---|---|
-| `Estado.bat` | Si está activo, la última confirmación del iPhone y los últimos eventos |
-| `Activar.bat` | Aplica la ubicación de `config.json` |
-| `Desactivar.bat` | Vuelve a la ubicación real (queda así aunque reinicies) |
-| `Cambiar ubicacion.bat` | Elige un lugar de `lugares.json` o pega coordenadas de Google Maps |
-| `Emparejar iPhone.bat` | Empareja el iPhone por Wi-Fi (una vez) |
-| `Instalar o reparar.bat` | Instala o repara todo; se puede correr las veces que haga falta |
+| `Estado.bat` | Whether it's active, the iPhone's last confirmation, recent events |
+| `Activar.bat` | Applies the location from `config.json` |
+| `Desactivar.bat` | Back to the real location (stays off after a reboot) |
+| `Cambiar ubicacion.bat` | Pick a place from `lugares.json` or paste Google Maps coordinates |
+| `Emparejar iPhone.bat` | Pair the iPhone over Wi-Fi (once) |
+| `Instalar o reparar.bat` | Install or repair everything; safe to re-run |
 
-Los lugares favoritos van en `lugares.json` (cópialo de `lugares.ejemplo.json`). `config.json` se crea solo desde `config.ejemplo.json`. Los dos son personales y están en `.gitignore`.
+Your favorite places go in `lugares.json` (copy it from `lugares.ejemplo.json`). `config.json` is created from `config.ejemplo.json`. Both are personal and `.gitignore`d.
 
-Con un radio mayor que 0 el daemon camina a paso normal alrededor del punto, sin alejarse más de ese radio.
+Set a radius greater than 0 and the daemon walks around the point at a normal pace, without going past that radius.
 
-## Cómo funciona
+## How it works
 
 <p align="center">
-  <img src="docs/architecture.svg" alt="Arquitectura" width="100%">
+  <img src="docs/architecture.svg" alt="Architecture" width="100%">
 </p>
 
 ```
-Tarea programada  →  revisar.ps1  →  servicio.ps1  →  ubicacion_daemon.py  →  iPhone
-(al encender, al iniciar sesión, al volver de suspensión, cada 5 min)
+Scheduled task  →  revisar.ps1  →  servicio.ps1  →  ubicacion_daemon.py  →  iPhone
+(at boot, at sign-in, on resume, every 5 min)
 ```
 
-Los problemas que resuelve el daemon:
+What the daemon handles:
 
-- **iOS 26/27 vuelven solos a la ubicación real.** Un `simulate-location set` único no basta, así que reenvía la ubicación cada 5 s y espera la respuesta del iPhone en cada envío.
-- **El iPhone corta el Wi-Fi al bloquearse.** Lo detecta en ~6 s y reconecta directo a la última IP conocida (sin buscar por Bonjour), así la ubicación real no alcanza a aparecer.
-- **No se pueden abrir sesiones nuevas mientras se simula**: una sesión RSD nueva hace que el iPhone descarte la simulación. Todo pasa por la conexión del daemon.
-- **La imagen de desarrollador** se monta sola después de que el iPhone se reinicia.
-- **Arreglo para Windows**: pymobiledevice3 se cae con las direcciones IPv6 link-local del iPhone (`UnicodeError` en `getaddrinfo`); `instalar.ps1` parchea `tunnel_service.py` para saltarlas.
+- **iOS 26/27 revert on their own.** A single `simulate-location set` isn't enough, so it re-sends the location every 5 s and waits for the iPhone to answer each time.
+- **The iPhone cuts the Wi-Fi when it locks.** It notices in ~6 s and reconnects straight to the last known IP (no Bonjour lookup), so the real location never gets a chance to show.
+- **No new sessions while simulating:** a fresh RSD session makes the iPhone drop the simulation, so everything goes through the daemon's one connection.
+- **The developer disk image** mounts itself again after the iPhone reboots.
+- **Windows fix:** pymobiledevice3 crashes on the iPhone's IPv6 link-local addresses (`UnicodeError` in `getaddrinfo`); `instalar.ps1` patches `tunnel_service.py` to skip them.
 
-La tarea corre en modo S4U (sin iniciar sesión ni guardar la contraseña) y con privilegios elevados, que hacen falta para crear la interfaz del túnel.
+The task runs as S4U (no sign-in and no stored password) with elevated privileges, which are needed to create the tunnel interface.
 
-## Limitaciones
+## Limitations
 
-- La PC tiene que estar encendida y sin suspenderse (en un notebook, configura "Al cerrar la tapa: No hacer nada"), y el iPhone en la misma Wi-Fi.
-- Si el iPhone se reinicia, hay que desbloquearlo una vez para que vuelva a conectar.
-- Buscar (Find My) puede seguir mostrando la ubicación real: es un servicio del sistema y no siempre usa la simulada.
-- Probado con pymobiledevice3 11.43.1 (fijado en `instalar.ps1`; el arreglo depende de esa versión).
+- The PC has to stay on and awake (on a laptop, set "When I close the lid: Do nothing"), and the iPhone on the same Wi-Fi.
+- If the iPhone reboots, unlock it once so it reconnects.
+- Find My can still show the real location: it's a system service and doesn't always use the simulated one.
+- Tested with pymobiledevice3 11.43.1 (pinned in `instalar.ps1`; the fix depends on that version).
 
-## Créditos y licencia
+## Credits & license
 
-Construido sobre [pymobiledevice3](https://github.com/doronz88/pymobiledevice3) de doronz88 (GPL-3.0-or-later). La idea de reenviar la ubicación cada cierto tiempo viene de [SimVirtualLocation](https://github.com/MohammedSayedAhmed/SimVirtualLocation).
+Built on [pymobiledevice3](https://github.com/doronz88/pymobiledevice3) by doronz88 (GPL-3.0-or-later). The idea of re-sending the location periodically comes from [SimVirtualLocation](https://github.com/MohammedSayedAhmed/SimVirtualLocation).
 
-Licencia GPL-3.0 (ver [LICENSE](LICENSE)).
-
----
-
-### In English
-
-GPS location spoofing for iPhone (iOS 26/27) over Wi-Fi, from Windows. No jailbreak, no cable, no Mac.
-
-Single-shot spoofs don't stick on iOS 26/27 (the phone reverts to the real GPS after a few seconds), so this runs in the background, re-applies the location, and reconnects on its own when the iPhone drops Wi-Fi. Built on [pymobiledevice3](https://github.com/doronz88/pymobiledevice3).
-
-Works only with your own iPhone, paired (you type a 6-digit code on the phone) and with Developer Mode on. See the Spanish sections above for setup and usage — the `.bat` names are self-explanatory.
+Licensed under GPL-3.0 (see [LICENSE](LICENSE)).
