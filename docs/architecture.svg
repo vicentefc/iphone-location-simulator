@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-label="Architecture">
+  <defs>
+    <linearGradient id="abg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1526"/>
+      <stop offset="1" stop-color="#0b1220"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4f8cff"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <marker id="arw" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="#5b7bbd"/>
+    </marker>
+    <style>
+      .t  { font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+      .h  { font-size:20px; font-weight:700; fill:#eaf0ff; }
+      .d  { font-size:14.5px; fill:#9db0d6; }
+      .lab{ font-size:13px; fill:#7e90b8; font-style:italic; }
+      .tag{ font-size:13px; font-weight:700; fill:#4f8cff; letter-spacing:1px; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="520" rx="18" fill="url(#abg)"/>
+  <rect x="0" y="0" width="1200" height="5" fill="url(#acc)"/>
+
+  <!-- Windows column -->
+  <text class="t tag" x="60" y="56">WINDOWS PC</text>
+  <rect x="48" y="70" width="640" height="420" rx="14" fill="#0e1830" stroke="#223256"/>
+
+  <!-- boxes -->
+  <g>
+    <rect x="80" y="100" width="576" height="74" rx="12" fill="#13203b" stroke="#2c3e63"/>
+    <text class="t h" x="100" y="134">Scheduled Task  ·  "Ubicacion iPhone"</text>
+    <text class="t d" x="100" y="158">At boot · at sign-in · on resume · every 5 min  (runs elevated, S4U)</text>
+  </g>
+
+  <g>
+    <rect x="80" y="196" width="576" height="62" rx="12" fill="#13203b" stroke="#2c3e63"/>
+    <text class="t h" x="100" y="226">revisar.ps1  —  watchdog</text>
+    <text class="t d" x="100" y="247">Relaunches the service if it died or hung</text>
+  </g>
+
+  <g>
+    <rect x="80" y="280" width="576" height="62" rx="12" fill="#13203b" stroke="#2c3e63"/>
+    <text class="t h" x="100" y="310">servicio.ps1  —  supervisor</text>
+    <text class="t d" x="100" y="331">Keeps the daemon alive · applies config.json changes</text>
+  </g>
+
+  <g>
+    <rect x="80" y="364" width="576" height="96" rx="12" fill="#152648" stroke="#4f8cff"/>
+    <text class="t h" x="100" y="396">ubicacion_daemon.py  —  engine</text>
+    <text class="t d" x="100" y="420">Wi-Fi connect (direct IP → Bonjour) · TCP tunnel · mount DDI</text>
+    <text class="t d" x="100" y="442">Re-sends location every 5 s, waits for the iPhone to confirm</text>
+  </g>
+
+  <!-- arrows down -->
+  <line x1="368" y1="174" x2="368" y2="196" stroke="#5b7bbd" stroke-width="2" marker-end="url(#arw)"/>
+  <line x1="368" y1="258" x2="368" y2="280" stroke="#5b7bbd" stroke-width="2" marker-end="url(#arw)"/>
+  <line x1="368" y1="342" x2="368" y2="364" stroke="#5b7bbd" stroke-width="2" marker-end="url(#arw)"/>
+
+  <!-- iPhone -->
+  <text class="t tag" x="820" y="56">SAME WI-FI</text>
+  <g transform="translate(828,150)">
+    <rect x="0" y="0" width="300" height="300" rx="20" fill="#0e1830" stroke="#223256"/>
+    <rect x="86" y="30" width="128" height="250" rx="22" fill="#0a1526" stroke="#2c3e63" stroke-width="2"/>
+    <rect x="98" y="54" width="104" height="188" rx="10" fill="#0d1a33"/>
+    <circle cx="150" cy="262" r="9" fill="#17233f" stroke="#2c3e63"/>
+    <!-- pin -->
+    <path d="M150 96 C133 96 120 109 120 126 C120 148 150 182 150 182 C150 182 180 148 180 126 C180 109 167 96 150 96 Z" fill="url(#acc)"/>
+    <circle cx="150" cy="126" r="12" fill="#0a1526"/>
+    <text class="t h" x="150" y="316" text-anchor="middle">iPhone</text>
+    <text class="t d" x="150" y="340" text-anchor="middle">Developer Mode · paired</text>
+  </g>
+
+  <!-- tunnel arrow -->
+  <line x1="656" y1="412" x2="828" y2="300" stroke="#4f8cff" stroke-width="2.5" marker-end="url(#arw)"/>
+  <text class="t lab" x="690" y="338">encrypted tunnel</text>
+  <line x1="828" y1="330" x2="656" y2="430" stroke="#5b7bbd" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arw)"/>
+  <text class="t lab" x="688" y="462">confirmation</text>
+</svg>

@@ -1,0 +1,10 @@
+# Datos personales: se crean a partir de los archivos *.ejemplo.json
+config.json
+lugares.json
+
+# Python
+__pycache__/
+*.pyc
+
+# Registros (normalmente viven en %LOCALAPPDATA%\UbicacionIphone, por si acaso)
+*.log

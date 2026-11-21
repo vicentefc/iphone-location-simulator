@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-label="iPhone Location Simulator">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="0.55" stop-color="#111c33"/>
+      <stop offset="1" stop-color="#1b2a4a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4f8cff"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4f8cff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#4f8cff" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .t  { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      .title { font-size: 58px; font-weight: 700; fill: #f4f7ff; }
+      .sub   { font-size: 24px; font-weight: 400; fill: #aab8d4; }
+      .chip  { font-size: 17px; font-weight: 600; fill: #cdd9f3; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="320" rx="20" fill="url(#bg)"/>
+  <circle cx="930" cy="150" r="260" fill="url(#glow)"/>
+  <rect x="0" y="0" width="1200" height="6" fill="url(#accent)"/>
+
+  <!-- phone + pin motif -->
+  <g transform="translate(905,70)">
+    <rect x="0" y="0" width="190" height="186" rx="30" fill="#0e1a30" stroke="#2c3e63" stroke-width="2"/>
+    <rect x="16" y="18" width="158" height="150" rx="16" fill="#0a1526"/>
+    <circle cx="95" cy="92" r="60" fill="none" stroke="#2c3e63" stroke-width="2"/>
+    <circle cx="95" cy="92" r="34" fill="none" stroke="#2c3e63" stroke-width="2"/>
+    <!-- location pin -->
+    <path d="M95 52 C78 52 65 65 65 82 C65 104 95 134 95 134 C95 134 125 104 125 82 C125 65 112 52 95 52 Z" fill="url(#accent)"/>
+    <circle cx="95" cy="82" r="12" fill="#0a1526"/>
+  </g>
+
+  <!-- text -->
+  <text class="t title" x="70" y="140">iPhone Location Simulator</text>
+  <text class="t sub" x="72" y="182">Set your iPhone's GPS over Wi-Fi, from Windows — no jailbreak, no cable, no Mac</text>
+
+  <!-- chips -->
+  <g transform="translate(72,230)">
+    <g>
+      <rect x="0" y="0" width="118" height="38" rx="19" fill="#17233f" stroke="#2c3e63"/>
+      <text class="t chip" x="59" y="25" text-anchor="middle">iOS 26 / 27</text>
+    </g>
+    <g transform="translate(130,0)">
+      <rect x="0" y="0" width="150" height="38" rx="19" fill="#17233f" stroke="#2c3e63"/>
+      <text class="t chip" x="75" y="25" text-anchor="middle">pymobiledevice3</text>
+    </g>
+    <g transform="translate(292,0)">
+      <rect x="0" y="0" width="108" height="38" rx="19" fill="#17233f" stroke="#2c3e63"/>
+      <text class="t chip" x="54" y="25" text-anchor="middle">Python</text>
+    </g>
+    <g transform="translate(412,0)">
+      <rect x="0" y="0" width="128" height="38" rx="19" fill="#17233f" stroke="#2c3e63"/>
+      <text class="t chip" x="64" y="25" text-anchor="middle">Auto-restart</text>
+    </g>
+    <g transform="translate(552,0)">
+      <rect x="0" y="0" width="112" height="38" rx="19" fill="#17233f" stroke="#2c3e63"/>
+      <text class="t chip" x="56" y="25" text-anchor="middle">GPL-3.0</text>
+    </g>
+  </g>
+</svg>
